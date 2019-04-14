@@ -2,4 +2,4 @@
 
 Bonjour,
 
-Voici le code d'un projet universitaire sur le theme de l'improvisation musical, developper en Ocaml.
+Voici le code d'un projet universitaire sur le theme de l'improvisation musical, developpé en Ocaml.
