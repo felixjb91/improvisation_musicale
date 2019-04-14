@@ -27,7 +27,7 @@ let noteName_to_string noteName =
   | La -> "La"
   | Si -> "Si"
 
-let affiche_Note note = 
+let affiche_Note_simple note = 
   let (alter:string) = match note.alteration with
     | Becarre -> ""
     | Diese -> "#"
@@ -50,9 +50,15 @@ let note2midi note =
   let numNomPlusAlter = if note.alteration = Diese then numNom + 1 else numNom in 
   (24 + 12*(note.octave)) + numNomPlusAlter
 
-let affiche_Note_Midi note = 
-  let _ = affiche_Note note in
-  Printf.printf " : %d \n" (note2midi note)
+
+let midi2freq midi = int_of_float (440. *. (2. ** ((float_of_int (midi-69)) /. 12.)))
+
+let note2freq note = midi2freq (note2midi note)
+
+
+let affiche_Note note = 
+  let _ = affiche_Note_simple note in
+  Printf.printf " --> MIDI = %d , fréquence = %d \n" (note2midi note) (note2freq note)
 
 
 let _ = 
@@ -82,11 +88,14 @@ let _ =
     octave = 3;
   }
   in 
-  let _ = affiche_Note_Midi do_4 ; 
-          affiche_Note_Midi do_4_diese;
-          affiche_Note_Midi la_2 ; 
-          affiche_Note_Midi la_3;
-          affiche_Note_Midi la_4 ; 
-          affiche_Note_Midi mi_3; 
+  let _ =
+    begin
+      affiche_Note do_4 ; 
+      affiche_Note do_4_diese;
+      affiche_Note la_2 ; 
+      affiche_Note la_3;
+      affiche_Note la_4 ; 
+      affiche_Note mi_3; 
+    end
   in
   ()
