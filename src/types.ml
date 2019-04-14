@@ -32,7 +32,28 @@ let affiche_Note note =
               | Becarre -> ""
               | Diese -> "#"
   in
-  Printf.printf "%s%d%s\n" ((noteName_to_string note.nom):string) ((note.octave):int) (alter:string)
+  Printf.printf "%s%d%s" ((noteName_to_string note.nom):string) ((note.octave):int) (alter:string)
+
+let num_Note_nom nom =
+  match nom with 
+  | Do -> 0
+  | Re -> 2
+  | Mi -> 4
+  | Fa -> 5
+  | Sol -> 7
+  | La -> 9
+  | Si -> 11
+
+
+let note2midi note = 
+  let numNom = num_Note_nom note.nom in
+  let numNomPlusAlter = if note.alteration = Diese then numNom + 1 else numNom in 
+  (24 + 12*(note.octave)) + numNomPlusAlter
+
+let affiche_Note_Midi note = 
+  let _ = affiche_Note note in
+  Printf.printf " : %d \n" (note2midi note)
+
 
 let _ = 
   let do_4 = {
@@ -52,7 +73,7 @@ let _ =
     alteration = Becarre;
     octave = 3;
   }and la_4 = {
-    nom = Do;
+    nom = La;
     alteration = Becarre;
     octave = 4;
   }and mi_3 = {
@@ -61,11 +82,11 @@ let _ =
     octave = 3;
   }
   in 
-  let _ = affiche_Note do_4 ; 
-          affiche_Note do_4_diese;
-          affiche_Note la_2 ; 
-          affiche_Note la_3;
-          affiche_Note la_4 ; 
-          affiche_Note mi_3; 
+  let _ = affiche_Note_Midi do_4 ; 
+          affiche_Note_Midi do_4_diese;
+          affiche_Note_Midi la_2 ; 
+          affiche_Note_Midi la_3;
+          affiche_Note_Midi la_4 ; 
+          affiche_Note_Midi mi_3; 
   in
   ()
