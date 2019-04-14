@@ -1,3 +1,4 @@
+(* ---- Les Types BEGIN ---- *)
 type note_name =
     Do
   | Re
@@ -16,7 +17,20 @@ type note = {
   alteration: alteration;
   octave: int;
 }
+(* ---- Les Types END ---- *)
 
+(*---------------------*)
+(* Les Fonctions BEGIN *)
+(*---------------------*)
+
+(* Cré une note en verifiant que la note existe (à compléter/modifier -> je suis pas sure !) *)
+let note_factory nom alter octave = 
+  if ((nom = Mi) && (alter = Diese))  || ((nom = Si) && (alter = Diese)) then
+    { nom = nom; alteration = Becarre; octave = octave; } 
+  else
+    { nom = nom; alteration = alter; octave = octave; } 
+
+(* converti le nom de la note en String *)
 let noteName_to_string noteName = 
   match noteName with
   | Do -> "Do"
@@ -27,6 +41,7 @@ let noteName_to_string noteName =
   | La -> "La"
   | Si -> "Si"
 
+(* Affiche la note avec ses parametres *)
 let affiche_Note_simple note = 
   let (alter:string) = match note.alteration with
     | Becarre -> ""
@@ -34,6 +49,7 @@ let affiche_Note_simple note =
   in
   Printf.printf "%s%d%s" ((noteName_to_string note.nom):string) ((note.octave):int) (alter:string)
 
+(* Retourne la position de la note sans prendre en compte l'alternation *)
 let num_Note_nom nom =
   match nom with 
   | Do -> 0
@@ -44,49 +60,32 @@ let num_Note_nom nom =
   | La -> 9
   | Si -> 11
 
-
+(* Retourne la hauteur MIDI de la note *) 
 let note2midi note = 
   let numNom = num_Note_nom note.nom in
-  let numNomPlusAlter = if note.alteration = Diese then numNom + 1 else numNom in 
+  let numNomPlusAlter = if note.alteration = Diese then numNom + 1 else numNom in (* +1 si Diese *)
   (24 + 12*(note.octave)) + numNomPlusAlter
 
-
+(* Calcul de la fréquence grâce à la hauteur MIDI *)
 let midi2freq midi = int_of_float (440. *. (2. ** ((float_of_int (midi-69)) /. 12.)))
-
+(* Retourne la fréquence de la note *)
 let note2freq note = midi2freq (note2midi note)
-
-
+(* Affichage de la note avec sa valeur MIDI et sa fréquence *)
 let affiche_Note note = 
   let _ = affiche_Note_simple note in
   Printf.printf " --> MIDI = %d , fréquence = %d \n" (note2midi note) (note2freq note)
 
+(*-------------------*)
+(* Les Fonctions END *)
+(*-------------------*)
 
 let _ = 
-  let do_4 = {
-    nom = Do;
-    alteration = Becarre;
-    octave = 4;
-  } and do_4_diese = {
-    nom = Do;
-    alteration = Diese;
-    octave = 4;
-  } and la_2 = {
-    nom = La;
-    alteration = Becarre;
-    octave = 2;
-  } and la_3 = {
-    nom = La;
-    alteration = Becarre;
-    octave = 3;
-  }and la_4 = {
-    nom = La;
-    alteration = Becarre;
-    octave = 4;
-  }and mi_3 = {
-    nom = Mi;
-    alteration = Becarre;
-    octave = 3;
-  }
+  let do_4 = note_factory Do Becarre 4;
+  and do_4_diese = note_factory Do Diese 4;
+  and la_2 = note_factory La Becarre 2;
+  and la_3 = note_factory La Becarre 3;
+  and la_4 = note_factory La Becarre 4;
+  and mi_3 = note_factory Mi Becarre 3
   in 
   let _ =
     begin
