@@ -29,8 +29,8 @@ let noteName_to_string noteName =
 
 let affiche_Note note = 
   let (alter:string) = match note.alteration with
-              | Becarre -> ""
-              | Diese -> "#"
+    | Becarre -> ""
+    | Diese -> "#"
   in
   Printf.printf "%s%d%s" ((noteName_to_string note.nom):string) ((note.octave):int) (alter:string)
 

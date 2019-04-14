@@ -1,0 +1,11 @@
+opam-version: "1.2.2"
+version: "1.0"
+maintainer: "rajasugan12@gmail.com"
+authors: ["Rajasugan Mangalathas" "Félix Jean-Baptiste"]
+homepage: "https://github.com/rajasugan/improvisation_musicale"
+bug-reports: "https://github.com/rajasugan/improvisation_musicale/issues"
+dev-repo: "git+https://github.com/rajasugan/improvisation_musicale.git"
+license: "Apache-2.0"
+build: [
+  ["dune" "build" "-p" name "-j" jobs]
+]
