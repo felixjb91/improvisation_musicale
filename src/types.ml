@@ -17,6 +17,7 @@ type note = {
   alteration: alteration;
   octave: int;
 }
+type score =  note list
 (* ---- Les Types END ---- *)
 
 (*---------------------*)
@@ -42,7 +43,7 @@ let noteName_to_string noteName =
   | Si -> "Si"
 
 (* Affiche la note avec ses parametres *)
-let affiche_Note_simple note = 
+let print_Note_simple note = 
   let (alter:string) = match note.alteration with
     | Becarre -> ""
     | Diese -> "#"
@@ -71,9 +72,29 @@ let midi2freq midi = int_of_float (440. *. (2. ** ((float_of_int (midi-69)) /. 1
 (* Retourne la fréquence de la note *)
 let note2freq note = midi2freq (note2midi note)
 (* Affichage de la note avec sa valeur MIDI et sa fréquence *)
-let affiche_Note note = 
-  let _ = affiche_Note_simple note in
+let print_Note note = 
+  let _ = print_Note_simple note in
   Printf.printf " --> MIDI = %d , fréquence = %d \n" (note2midi note) (note2freq note)
+
+(* Affiche score/partition *)
+let print_Score  partition = 
+  let _ = Printf.printf "\n"in
+  List.iter (fun x ->
+    begin
+      print_Note_simple x;
+      Printf.printf "\n";
+    end
+  ) partition
+
+(* Joue la note ! *)
+(*let play_note note =
+  begin
+    Graphics.open_graph " 400x600";
+    Graphics.sound 440 1000;
+    Graphics.set_window_title "Hello";
+    Graphics.read_key ();
+  end
+*)
 
 (*-------------------*)
 (* Les Fonctions END *)
@@ -89,12 +110,15 @@ let _ =
   in 
   let _ =
     begin
-      affiche_Note do_4 ; 
-      affiche_Note do_4_diese;
-      affiche_Note la_2 ; 
-      affiche_Note la_3;
-      affiche_Note la_4 ; 
-      affiche_Note mi_3; 
+      print_Note do_4 ; 
+      print_Note do_4_diese;
+      print_Note la_2 ; 
+      print_Note la_3;
+      print_Note la_4 ; 
+      print_Note mi_3; 
     end
   in
+  let my_score = [do_4;do_4_diese;la_2;la_3;la_4;mi_3]  in
+  let () = print_Score my_score in
+  (*let _ = play_note do_4 in*)
   ()
