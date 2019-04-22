@@ -86,15 +86,7 @@ let print_Score  partition =
     end
   ) partition
 
-(* Joue la note ! *)
-(*let play_note note =
-  begin
-    Graphics.open_graph " 400x600";
-    Graphics.sound 440 1000;
-    Graphics.set_window_title "Hello";
-    Graphics.read_key ();
-  end
-*)
+
 
 (*-------------------*)
 (* Les Fonctions END *)
