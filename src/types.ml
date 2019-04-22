@@ -51,7 +51,7 @@ let print_Note_simple note =
   Printf.printf "%s%d%s" ((noteName_to_string note.nom):string) ((note.octave):int) (alter:string)
 
 (* Retourne la position de la note sans prendre en compte l'alternation *)
-let num_Note_nom nom =
+let nomNote2num nom =
   match nom with 
   | Do -> 0
   | Re -> 2
@@ -61,11 +61,35 @@ let num_Note_nom nom =
   | La -> 9
   | Si -> 11
 
+(* Retourne la position de la note sans prendre en compte l'alternation *)
+let numNote2nom num =
+  match num with 
+  | 0 -> Do
+  | 1 -> Do
+  | 2 -> Re 
+  | 3 -> Re
+  | 4 -> Mi
+  | 5 -> Fa
+  | 6 -> Fa
+  | 7 -> Sol 
+  | 8 -> Sol
+  | 9 -> La
+  | 10 -> La 
+  | 11 -> Si
+
 (* Retourne la hauteur MIDI de la note *) 
 let note2midi note = 
-  let numNom = num_Note_nom note.nom in
+  let numNom = nomNote2num note.nom in
   let numNomPlusAlter = if note.alteration = Diese then numNom + 1 else numNom in (* +1 si Diese *)
   (24 + 12*(note.octave)) + numNomPlusAlter
+
+(* Retour la note d'une valeur MIDI *)
+let midi2note midi = 
+  let octave = (midi - 24) / 12 in
+  let numNote = midi - (24 + octave * 12) in
+  let nom = numNote2nom in 
+  let alter = if numNote=1 || numNote=3 || numNote=6 || numNote=8 || numNote=10 then Diese else Becarre in
+  note_factory nom alter octave
 
 (* Calcul de la fréquence grâce à la hauteur MIDI *)
 let midi2freq midi = int_of_float (440. *. (2. ** ((float_of_int (midi-69)) /. 12.)))
