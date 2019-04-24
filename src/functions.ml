@@ -28,3 +28,7 @@ let play_score_midi score =
 (* Play a score *)
 let play_score score =
   List.iter (play_note 1000) score
+
+(* transpose *)
+let transpose score intervalle = 
+  List.map (fun note -> midi2note ((note2midi note) + intervalle)) score
