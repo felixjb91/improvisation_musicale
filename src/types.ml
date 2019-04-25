@@ -1,4 +1,5 @@
 (* ---- Les Types BEGIN ---- *)
+
 type note_name =
     Do
   | Re
@@ -7,7 +8,6 @@ type note_name =
   | Sol
   | La
   | Si
-
 
 type alteration =
     Becarre
@@ -18,11 +18,18 @@ type note = {
   alteration: alteration;
   octave: int;
 }
+
 type score =  note list
+
 type arpege = 
     Montant
   | Descendant
   | LesDeux
+
+type 'a tree = 
+    Empty
+  | Tree of 'a * int * ('a tree list)
+
 (* ---- Les Types END ---- *)
 
 (*---------------------*)
@@ -110,11 +117,11 @@ let print_Note note =
 let print_Score  partition = 
   let _ = Printf.printf "\n"in
   List.iter (fun x ->
-    begin
-      print_Note_simple x;
-      Printf.printf "\n";
-    end
-  ) partition
+      begin
+        print_Note_simple x;
+        Printf.printf "\n";
+      end
+    ) partition
 
 (* Crée un arpège sur la base d'une "basse" en valeur MIDI et de deux intervalles *)
 (* Un arpège peut être croissant, décroissant ou croissant puis décroissant*)
@@ -123,24 +130,24 @@ let arpergie arpe basse itv1 itv2 nbOctave =
     if cptOct=0 then
       acc
     else
-      if (arpe = Montant) then 
-        let acc = ((List.hd acc) - (12-itv2))::acc in
-        let acc = ((List.hd acc) - (itv2-itv1))::acc in
-        let acc = ((List.hd acc) - itv1)::acc in
-        aux acc (cptOct-1) arpe
-      else
-        let acc = ((List.hd acc) + itv1)::acc in
-        let acc = ((List.hd acc) + (itv2-itv1))::acc in
-        let acc = ((List.hd acc) + (12-itv2))::acc in
-        aux acc (cptOct-1) arpe
+    if (arpe = Montant) then 
+      let acc = ((List.hd acc) - (12-itv2))::acc in
+      let acc = ((List.hd acc) - (itv2-itv1))::acc in
+      let acc = ((List.hd acc) - itv1)::acc in
+      aux acc (cptOct-1) arpe
+    else
+      let acc = ((List.hd acc) + itv1)::acc in
+      let acc = ((List.hd acc) + (itv2-itv1))::acc in
+      let acc = ((List.hd acc) + (12-itv2))::acc in
+      aux acc (cptOct-1) arpe
   in
   match arpe with
   | Montant -> aux [basse+nbOctave*12] nbOctave Montant
   | Descendant -> aux [basse-nbOctave*12] nbOctave Descendant
   | LesDeux -> 
-      let res = aux [basse] nbOctave Descendant in
-      let res = (basse+nbOctave*12)::res in
-      aux res nbOctave Montant
+    let res = aux [basse] nbOctave Descendant in
+    let res = (basse+nbOctave*12)::res in
+    aux res nbOctave Montant
 (*-------------------*)
 (* Les Fonctions END *)
 (*-------------------*)
@@ -165,19 +172,19 @@ let _ =
   in
   let my_score = [do_4;do_4_diese;la_2;la_3;la_4;mi_3]  in
   let _ = print_Score my_score in
- 
+
   let my_arpege_montant = arpergie Montant 48 4 7 3 in
   let my_arpege_descendant = arpergie Descendant 84 4 7 3 in
   let my_arpege_lesDeux = arpergie LesDeux 48 4 7 3 in
 
   let _ =
-  begin
-    Printf.printf "\n";
-    List.iter (fun x -> Printf.printf "%d " x) my_arpege_montant;
-    Printf.printf "\n";
-    List.iter (fun x -> Printf.printf "%d " x) my_arpege_descendant;
-    Printf.printf "\n";
-    List.iter (fun x -> Printf.printf "%d " x) my_arpege_lesDeux;
-  end
+    begin
+      Printf.printf "\n";
+      List.iter (fun x -> Printf.printf "%d " x) my_arpege_montant;
+      Printf.printf "\n";
+      List.iter (fun x -> Printf.printf "%d " x) my_arpege_descendant;
+      Printf.printf "\n";
+      List.iter (fun x -> Printf.printf "%d " x) my_arpege_lesDeux;
+    end
   in
   ()
