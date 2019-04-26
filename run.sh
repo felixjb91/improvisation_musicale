@@ -15,7 +15,7 @@ sudo apt-get install opam libcanberra-gtk-module libcanberra-gtk3-module
 
 echo "Installing required libraries..."
 
-opam install dune graphics lablgtk2
+opam install dune graphics lablgtk
 
 echo "Building the project..."
 
