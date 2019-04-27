@@ -16,7 +16,21 @@ let it_crowd_freq = midi_to_freq_score it_crowd
 
 let locale = GtkMain.Main.init ()
 
+(* Play Sound *)
+let play_sound () =
+  let music_filename = Sys.getcwd () ^ "/LeminiLeone_-_LL_-_Nientedicocco_-_Loop.mp3" in
+  let music = Sdlmixer.load_music music_filename in ();
+  Sdlmixer.fadein_music music 1.0;
+  Sdltimer.delay 1000; (* fade in *)
+  Sdltimer.delay 6000; (* play *)
+  Sdlmixer.fadeout_music 2.0;
+  Sdltimer.delay 2000; (* fade out *)
+  Sdlmixer.halt_music ();
+  Sdlmixer.free_music music
+
 let main () =
+  Sdlmixer.open_audio ();
+  at_exit Sdlmixer.close_audio;
   let window = GWindow.window ~width:400 ~height:600 ~title:"Improvisation Musicale" () in
   let vbox = GPack.vbox ~packing:window#add () in
   let _ = window#connect#destroy ~callback:Main.quit in ();
@@ -34,8 +48,7 @@ let main () =
   (* Button *)
   let button = GButton.button ~label:"Play Music!"
       ~packing:vbox#add () in
-  let _ = button#connect#clicked ~callback: (fun () -> let _ = Sdlmixer.open_audio 
-                                                           ~freq:523 in () ) in ();
+  let _ = button#connect#clicked ~callback: play_sound in ();
 
   (* Display the windows and enter Gtk+ main loop *)
   window#add_accel_group accel_group;
