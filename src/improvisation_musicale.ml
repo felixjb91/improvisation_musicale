@@ -1,4 +1,6 @@
 open Functions
+open GMain
+open GdkKeysyms
 
 (* Test Scores MIDI Number *)
 let ode_to_the_joy = [71; 71; 72; 74; 74; 72; 71; 69; 67; 67; 69; 71; 71; 69; 69; 71; 71; 72; 74; 74; 72; 71; 69; 67; 67; 69; 71; 69; 67; 67; 69; 69; 71; 67; 69; 71; 72; 71; 67; 69; 71; 72; 71; 69; 67; 69; 62; 71; 71; 72; 74; 74; 72; 71; 69; 67; 67; 69; 71; 69; 67; 67]
@@ -12,10 +14,32 @@ let ode_to_the_joy_freq = midi_to_freq_score ode_to_the_joy
 let game_of_thrones_freq = midi_to_freq_score game_of_thrones
 let it_crowd_freq = midi_to_freq_score it_crowd
 
-let _ =
-  begin
-    Graphics.open_graph " 400x600";
-    Graphics.set_window_title "Improvisation Musicale";
-    List.iter (fun x -> Graphics.sound x 500) ode_to_the_joy_freq;
-    Graphics.read_key ();
-  end
+let locale = GtkMain.Main.init ()
+
+let main () =
+  let window = GWindow.window ~width:400 ~height:600 ~title:"Improvisation Musicale" () in
+  let vbox = GPack.vbox ~packing:window#add () in
+  let _ = window#connect#destroy ~callback:Main.quit in ();
+
+  (* Menu bar *)
+  let menubar = GMenu.menu_bar ~packing:vbox#pack () in
+  let factory = new GMenu.factory menubar in
+  let accel_group = factory#accel_group in
+  let file_menu = factory#add_submenu "File" in
+
+  (* File menu *)
+  let factory = new GMenu.factory file_menu ~accel_group in
+  let _ = factory#add_item "Quit" ~key:_Q ~callback: Main.quit in ();   
+
+  (* Button *)
+  let button = GButton.button ~label:"Play Music!"
+      ~packing:vbox#add () in
+  let _ = button#connect#clicked ~callback: (fun () -> let _ = Sdlmixer.open_audio 
+                                                           ~freq:523 in () ) in ();
+
+  (* Display the windows and enter Gtk+ main loop *)
+  window#add_accel_group accel_group;
+  window#show ();
+  Main.main ()
+
+let () = main ()
