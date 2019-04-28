@@ -25,15 +25,13 @@ fi
 
 echo "Installing required libraries..."
 
-opam install dune graphics lablgtk ocamlsdl conf-sdl-mixer -y
+opam install dune graphics lablgtk ocamlsdl conf-sdl-mixer mm -y
 
 echo "Building the project..."
 
 dune build
 
 echo "Launching the app..."
-
-cp LeminiLeone_-_LL_-_Nientedicocco_-_Loop.mp3 _build/install/default/bin/LeminiLeone_-_LL_-_Nientedicocco_-_Loop.mp3
 
 cd _build/install/default/bin/
 

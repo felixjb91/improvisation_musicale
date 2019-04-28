@@ -18,7 +18,8 @@ let locale = GtkMain.Main.init ()
 
 (* Play Sound *)
 let play_sound () =
-  let music_filename = Sys.getcwd () ^ "/LeminiLeone_-_LL_-_Nientedicocco_-_Loop.mp3" in
+  let _ = sine 44100 1.0 311 5 "test" in
+  let music_filename = Sys.getcwd () ^ "/test.wav" in
   let music = Sdlmixer.load_music music_filename in ();
   Sdlmixer.fadein_music music 1.0;
   Sdltimer.delay 1000; (* fade in *)
@@ -27,6 +28,9 @@ let play_sound () =
   Sdltimer.delay 2000; (* fade out *)
   Sdlmixer.halt_music ();
   Sdlmixer.free_music music
+
+let test () =
+  let _ = sine 440 1.0 440 5 "test" in ()
 
 let main () =
   Sdlmixer.open_audio ();
