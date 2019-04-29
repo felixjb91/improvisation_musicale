@@ -17,6 +17,33 @@ type note = {
   nom: note_name;
   alteration: alteration;
   octave: int;
+  duree: float;
+}
+
+type type_de_note =
+   Noire
+  | Croche
+  | Blanche
+  | NoirePoint
+
+type note = {
+  nom: note_name;
+  alteration: alteration;
+  octave: int;
+  type_de_note: type_de_note;
+}
+
+type type_de_note =
+  | Noire
+  | Croche
+  | Blanche
+  | NoirePoint
+
+type types_note = {
+  nom: note_name;
+  alteration: alteration;
+  octave: int;
+  type_de_note: type_de_note;
 }
 
 type score =  note list
@@ -90,7 +117,15 @@ let numNote2nom num =
   | 11 -> Si
   | _ -> Do
 
+let note_type x note = 
+  match note.type_de_note with
+  | Noire -> 60.0 /. x
+  | Croche -> 0.5 *. (60.0 /. x)
+  | Blanche -> 2.0 *. (60.0 /. x)
+  | NoirePoint -> 1.5 *. (60.0 /. x)
+
 (* Retourne la hauteur MIDI de la note *) 
+
 let note2midi note = 
   let numNom = nomNote2num note.nom in
   let numNomPlusAlter = if note.alteration = Diese then numNom + 1 else numNom in (* +1 si Diese *)
