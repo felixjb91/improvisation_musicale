@@ -21,19 +21,6 @@ type note = {
 }
 
 type type_de_note =
-   Noire
-  | Croche
-  | Blanche
-  | NoirePoint
-
-type note = {
-  nom: note_name;
-  alteration: alteration;
-  octave: int;
-  type_de_note: type_de_note;
-}
-
-type type_de_note =
   | Noire
   | Croche
   | Blanche
