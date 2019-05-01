@@ -26,10 +26,17 @@ let main () =
   let factory = new GMenu.factory file_menu ~accel_group in
   let _ = factory#add_item "Quit" ~key:_Q ~callback: Main.quit in ();   
 
-  (* Button *)
-  let button = GButton.button ~label:"Play Music!"
+  (* Play Game of Thrones Theme Music *)
+  let button = GButton.button ~label:"Game of thrones"
       ~packing:vbox#add () in
-  let _ = button#connect#clicked ~callback: (fun () -> play_sound game_of_thrones duration "Game_of_thrones") in ();
+  let notes_list, duration_list = (Scores.scoreTypedNote2doubleList Samplemusic.game_of_thrones 120.0) in
+  let _ = button#connect#clicked ~callback: (fun () -> play_sound notes_list duration_list "Game_of_thrones") in ();
+
+  (* Play Ode to Joy Music Simple Version *)
+  let button = GButton.button ~label:"Ode to joy!"
+      ~packing:vbox#add () in
+  let notes_list, duration_list = (Scores.scoreTypedNote2doubleList Samplemusic.ode_to_joy 120.0) in
+  let _ = button#connect#clicked ~callback: (fun () -> play_sound notes_list duration_list "Ode_to_joy") in ();
 
   (* Display the windows and enter Gtk+ main loop *)
   window#add_accel_group accel_group;
