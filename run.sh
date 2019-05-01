@@ -30,7 +30,7 @@ sudo apt-get install opam libcanberra-gtk-module libcanberra-gtk3-module
 
 echo "Installing required libraries..."
 
-opam install dune graphics lablgtk ocamlsdl conf-sdl-mixer mm -y
+opam install alcotest dune graphics lablgtk ocamlsdl conf-sdl-mixer mm -y
 
 echo "Building the project..."
 
