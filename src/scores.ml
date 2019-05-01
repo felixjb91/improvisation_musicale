@@ -39,6 +39,11 @@ let midi_to_freq_score midi_score =
     | _ -> []
   in aux [] midi_score
 
+(* Convert MIDI list to Frequency list *)
+let midi_to_freq_score midi_score = List.map (fun x -> midi2freq x) midi_score
+
+(* Convert note list to MIDI list *)
+let note_to_midi_score score= List.map (fun x -> note2midi x) score
 
 (* Play a score MIDI - Exercise 2.3 *)
 let play_score_midi score =
