@@ -17,7 +17,6 @@ type note = {
   nom: note_name;
   alteration: alteration;
   octave: int;
-  duree: float;
 }
 
 type type_de_note =
@@ -27,9 +26,7 @@ type type_de_note =
   | NoirePoint
 
 type types_note = {
-  nom: note_name;
-  alteration: alteration;
-  octave: int;
+  note: note;
   type_de_note: type_de_note;
 }
 
@@ -57,6 +54,8 @@ let note_factory nom alter octave =
   else
     { nom = nom; alteration = alter; octave = octave; } 
 
+
+let note_factory_type note type_de_note = {note = note; type_de_note = type_de_note;}
 (* converti le nom de la note en String *)
 let noteName_to_string noteName = 
   match noteName with
@@ -67,6 +66,13 @@ let noteName_to_string noteName =
   | Sol -> "Sol"
   | La -> "La"
   | Si -> "Si"
+
+  let typeNote_to_string type_de_note = 
+  match type_de_note with
+  | Noire -> "Noire"
+  | Croche -> "Croche"
+  | Blanche -> "Blance"
+  | NoirePoint -> "NoirePoint"
 
 (* Affiche la note avec ses parametres *)
 let print_Note_simple note = 
@@ -133,7 +139,12 @@ let note2freq note = midi2freq (note2midi note)
 (* Affichage de la note avec sa valeur MIDI et sa fréquence *)
 let print_Note note = 
   let _ = print_Note_simple note in
-  Printf.printf " --> MIDI = %d , frequence = %d \n" (note2midi note) (note2freq note)
+  Printf.printf " --> MIDI = %d , frequence = %d " (note2midi note) (note2freq note)
+
+
+let print_type_note laNote= 
+  let _ = print_Note_simple laNote.note in
+  let _ = Printf.printf ", type : %s \n" (typeNote_to_string laNote.type_de_note) in ()
 
 (* Affiche score/partition *)
 let print_Score  partition = 
@@ -182,6 +193,13 @@ let _ =
   and la_4 = note_factory La Becarre 4;
   and mi_3 = note_factory Mi Becarre 3
   in 
+  let do_4_blanche = note_factory_type do_4 Blanche;
+  and do_4_diese_noire = note_factory_type do_4_diese Noire;
+  and la_2_croche = note_factory_type la_2 Croche;
+  and la_3_noirePoint = note_factory_type la_3 NoirePoint;
+  and la_4_noire = note_factory_type la_4 Noire;
+  and mi_3_blanche = note_factory_type mi_3 Blanche
+  in
   let _ =
     begin
       print_Note do_4 ; 
@@ -189,7 +207,13 @@ let _ =
       print_Note la_2 ; 
       print_Note la_3;
       print_Note la_4 ; 
-      print_Note mi_3; 
+      print_Note mi_3;
+      print_type_note do_4_blanche ; 
+      print_type_note do_4_diese_noire;
+      print_type_note la_2_croche ; 
+      print_type_note la_3_noirePoint;
+      print_type_note la_4_noire ; 
+      print_type_note mi_3_blanche;  
     end
   in
   let my_score = [do_4;do_4_diese;la_2;la_3;la_4;mi_3]  in
@@ -209,4 +233,6 @@ let _ =
       List.iter (fun x -> Printf.printf "%d " x) my_arpege_lesDeux;
     end
   in
+
+
   ()
