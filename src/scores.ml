@@ -27,18 +27,6 @@ let arpergie arpe basse itv1 itv2 nbOctave =
     let res = (basse+nbOctave*12)::res in
     aux res nbOctave Montant
 
-
-(* Convert MIDI list to Frequency list *)
-let midi_to_freq_score midi_score =
-  let rec aux acc l =
-    match l with
-    | element_1::sub_list -> 
-      let acc = aux acc sub_list in
-      let x = midi2freq element_1 in
-      x::acc
-    | _ -> []
-  in aux [] midi_score
-
 (* Convert MIDI list to Frequency list *)
 let midi_to_freq_score midi_score = List.map (fun x -> midi2freq x) midi_score
 
