@@ -3,5 +3,5 @@
 (executable
  (name improvisation_musicale)
  (public_name improvisation_musicale)
- (libraries mm graphics lablgtk2 sdl sdl.sdlmixer)
+ (libraries mm graphics lablgtk2 sdl sdl.sdlmixer alcotest)
 )
