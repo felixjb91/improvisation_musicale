@@ -1,5 +1,3 @@
-open Types
-open Notes
 open Scores
 
 (* Create Song *)
