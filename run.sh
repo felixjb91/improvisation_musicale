@@ -6,14 +6,14 @@ if [ $(dpkg-query -W -f='${Status}' ocaml 2>/dev/null | grep -c "ok installed") 
 then
   echo "ocaml not installed"
   echo "Installing OCaml - requires sudo permissions"
-  sudo brew install ocaml
+  sudo apt-get install ocaml
 fi
 
 if [ $(dpkg-query -W -f='${Status}' libsdl1.2-dev 2>/dev/null | grep -c "ok installed") -eq 0 ];
 then
   echo "SDL libraries not installed"
   echo "Installing libsdl1.2-dev - requires sudo permissions"
-  sudo brew install libsdl1.2-dev libsdl-mixer1.2-dev -y
+  sudo apt-get install libsdl1.2-dev libsdl-mixer1.2-dev -y
 fi
 
 if [ $(dpkg-query -W -f='${Status}' libgtk2.0-dev 2>/dev/null | grep -c "ok installed") -eq 0 ];
