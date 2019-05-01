@@ -23,6 +23,11 @@ then
   sudo apt-get install libexpat1-dev libgtk2.0-dev -y
 fi
 
+echo "Installing dependencies..."
+echo "Requires sudo permissions..."
+
+sudo apt-get install opam libcanberra-gtk-module libcanberra-gtk3-module
+
 echo "Installing required libraries..."
 
 opam install dune graphics lablgtk ocamlsdl conf-sdl-mixer mm -y
