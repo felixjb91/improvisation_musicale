@@ -1,5 +1,6 @@
 open Types
-open Functions
+open Notes
+open Scores
 
 (* Example: Declaring simple Notes *)
 let do_4 = note_factory Do Becarre 4
