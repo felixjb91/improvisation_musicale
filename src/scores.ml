@@ -51,3 +51,9 @@ let play_score score =
 (* transpose *)
 let transpose score intervalle = 
   List.map (fun note -> midi2note ((note2midi note) + intervalle)) score
+
+(* Split Typed Note into Note List and Duration List *)
+let scoreTypedNote2doubleList scoreT bpm = 
+  let listM = List.map (fun typedNote -> note2midi typedNote.note) scoreT in
+  let listD = List.map (fun typedNote -> noteType2duree bpm typedNote) scoreT in
+  listM, listD

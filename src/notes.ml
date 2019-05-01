@@ -63,7 +63,7 @@ let numNote2nom num =
   | 11 -> Si
   | _ -> Do
 
-let note_type x note = 
+let noteType2duree x note = 
   match note.type_de_note with
   | Noire -> 60.0 /. x
   | Croche -> 0.5 *. (60.0 /. x)
