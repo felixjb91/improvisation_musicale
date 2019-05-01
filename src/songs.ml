@@ -38,7 +38,7 @@ let wav_data sample_rate gain freq duration song_name =
   let _ = Printf.printf "Length = %d" (List.length data) in
   create_song song_name sample_rate data
 
-(* Play Sound *)
+(* Play a song *)
 let play_sound notes duration song_name =
   let _ = wav_data 44100 1.0 notes duration song_name in
   let music_filename = Sys.getcwd () ^ "/" ^ song_name ^ ".wav" in

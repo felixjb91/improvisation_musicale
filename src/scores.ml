@@ -1,8 +1,7 @@
 open Types
 open Notes
 
-(* Crée un arpège sur la base d'une "basse" en valeur MIDI et de deux intervalles *)
-(* Un arpège peut être croissant, décroissant ou croissant puis décroissant*)
+(* Creating an Arpeggio *)
 let arpergie arpe basse itv1 itv2 nbOctave =
   let rec aux acc cptOct arpe =
     if cptOct=0 then
@@ -30,7 +29,7 @@ let arpergie arpe basse itv1 itv2 nbOctave =
 (* Convert MIDI list to Frequency list *)
 let midi_to_freq_score midi_score = List.map (fun x -> midi2freq x) midi_score
 
-(* Convert note list to MIDI list *)
+(* Convert Note list to MIDI list *)
 let note_to_midi_score score= List.map (fun x -> note2midi x) score
 
 (* Play a score MIDI - Exercise 2.3 *)
@@ -41,7 +40,7 @@ let play_score_midi score =
 let play_score score =
   List.iter (play_note 1000) score
 
-(* transpose *)
+(* Transpose *)
 let transpose score intervalle = 
   List.map (fun note -> midi2note ((note2midi note) + intervalle)) score
 

@@ -1,6 +1,7 @@
 open Types
 open Notes
 
+(* Game of Thrones Theme Music *)
 let game_of_thrones =
   [
     note_factory_type (note_factory Sol Becarre 4) Noire;
@@ -83,6 +84,7 @@ let game_of_thrones =
     note_factory_type (note_factory Do Becarre 4) Blanche; (* BlanchePointe *)
   ]
 
+(* Ode to joy - Simple Version *)
 let ode_to_joy =
   [
     note_factory_type (note_factory Mi Becarre 4) Noire;
