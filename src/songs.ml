@@ -45,7 +45,7 @@ let play_sound notes duration song_name =
   let music = Sdlmixer.load_music music_filename in ();
   Sdlmixer.fadein_music music 1.0;
   Sdltimer.delay 1000; (* fade in *)
-  Sdltimer.delay 60000; (* play *)
+  Sdltimer.delay (int_of_float((List.fold_left (fun x y -> x +. y) 0.0 duration)*.100.0)); (* play *)
   Sdlmixer.fadeout_music 2.0;
   Sdltimer.delay 2000; (* fade out *)
   Sdlmixer.halt_music ();
