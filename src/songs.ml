@@ -42,10 +42,11 @@ let play_sound notes duration song_name =
   let _ = wav_data 44100 1.0 notes duration song_name in
   let music_filename = Sys.getcwd () ^ "/" ^ song_name ^ ".wav" in
   let music = Sdlmixer.load_music music_filename in ();
+  let reader = new Audio.IO.Reader.of_wav_file music_filename in
+  let duration = reader#duration_time in ();
+  let _ = Printf.printf "%f" duration in ();
   Sdlmixer.fadein_music music 1.0;
-  Sdltimer.delay 1000; (* fade in *)
-  Sdltimer.delay (int_of_float((List.fold_left (fun x y -> x +. y) 0.0 duration)*.100.0)); (* play *)
+  Sdltimer.delay (int_of_float(duration*.1000.0));
   Sdlmixer.fadeout_music 2.0;
-  Sdltimer.delay 2000; (* fade out *)
   Sdlmixer.halt_music ();
   Sdlmixer.free_music music
