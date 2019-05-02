@@ -41,6 +41,16 @@ let main () =
   let notes_list, duration_list = (Scores.scoreTypedNote2doubleList Samplemusic.ode_to_joy 120.0) in
   let _ = button#connect#clicked ~callback: (fun () -> play_sound notes_list duration_list "Ode_to_joy") in ();
 
+  (* Button to open Input Text Dialog *)
+  let s = "Compose Music" in
+  let button = GButton.button ~label:"Create your song!" ~packing:vbox#add () in
+  let _ = button#connect#clicked 
+      ~callback: (fun () -> 
+          match GToolbox.input_text ~title:s s with 
+          | Some text -> let notes_list, duration_list = (Scores.scoreTypedNote2doubleList (Gui.typed_note_list_of_string text) 120.0) in
+            let _ = play_sound notes_list duration_list "User Notes" in ()
+          | None -> ()) in ();
+
   (* Display the windows and enter Gtk+ main loop *)
   window#add_accel_group accel_group;
   window#show ();

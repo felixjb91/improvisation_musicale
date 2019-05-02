@@ -26,14 +26,43 @@ let noteName_to_string noteName =
   | Sol -> "Sol"
   | La -> "La"
   | Si -> "Si"
+  | Rest -> "Rest"
+
+(* String to Note *)
+let string_to_noteName str = 
+  match str with
+  | "Do" -> Do
+  | "Re" -> Re
+  | "Mi" -> Mi
+  | "Fa" -> Fa
+  | "Sol" -> Sol
+  | "La" -> La
+  | "Si" -> Si
+  | _ -> Rest
+
+(* String to Alteration *)
+let string_to_alteration str =
+  match str with
+  | "Becarre" -> Becarre
+  | "Diese" -> Diese
+  | _ -> Becarre
 
 (* Convert Type of a Note to String *)
 let typeNote_to_string type_de_note = 
   match type_de_note with
   | Noire -> "Noire"
   | Croche -> "Croche"
-  | Blanche -> "Blance"
+  | Blanche -> "Blanche"
   | NoirePoint -> "NoirePoint"
+
+(* Convert String to Type of a Note *)
+let string_to_noteType str = 
+  match str with
+  | "Noire" -> Noire
+  | "Croche" -> Croche
+  | "Blanche" -> Blanche
+  | "NoirePoint" -> NoirePoint
+  | _ -> Noire
 
 (* Print a Note with its parameters *)
 let print_Note_simple note = 
@@ -53,6 +82,7 @@ let nomNote2num nom =
   | Sol -> 7
   | La -> 9
   | Si -> 11
+  | Rest -> -1
 
 (* Return the name of the Note *)
 let numNote2nom num =
@@ -69,7 +99,7 @@ let numNote2nom num =
   | 9 -> La
   | 10 -> La 
   | 11 -> Si
-  | _ -> Do
+  | _ -> Rest
 
 (* Get the duration of a Note in seconds *)
 let noteType2duree x note = 

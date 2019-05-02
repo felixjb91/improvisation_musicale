@@ -9,6 +9,7 @@ type note_name =
   | Sol
   | La
   | Si
+  | Rest
 
 (* Pitch of a Note - Natural or Sharp *)
 type alteration =
