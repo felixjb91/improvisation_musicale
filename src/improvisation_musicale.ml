@@ -43,10 +43,11 @@ let main () =
 
   (* Button to open Input Text Dialog *)
   let s = "Compose Music" in
+  let help_text = "Here is an example: \n\nA Note contains 4 parts separated by hyphens -\nNotes are separated by a semi-colon ;\n\nDo-Becarre-4-Noire;\nRe-Becarre-3-Noire;\n\n You can delete this text and write your own notes\n" in
   let button = GButton.button ~label:"Create your song!" ~packing:vbox#add () in
   let _ = button#connect#clicked 
       ~callback: (fun () -> 
-          match GToolbox.input_text ~title:s s with 
+          match GToolbox.input_text ~parent:window ~text:help_text ~title:s s with 
           | Some text -> let notes_list, duration_list = (Scores.scoreTypedNote2doubleList (Gui.typed_note_list_of_string text) 120.0) in
             let _ = play_sound notes_list duration_list "User Notes" in ()
           | None -> ()) in ();
