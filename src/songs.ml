@@ -35,7 +35,6 @@ let wav_data sample_rate gain freq duration song_name =
       | (x::s_f, y::s_d) ->  aux s_f s_d (acc@[sine sample_rate gain x y])
       | (_, _) ->  acc@[sine sample_rate 0.0 0 0.0] in
     aux (midi_to_freq_score freq) duration [] in
-  let _ = Printf.printf "Length = %d" (List.length data) in
   create_song song_name sample_rate data
 
 (* Play a song *)

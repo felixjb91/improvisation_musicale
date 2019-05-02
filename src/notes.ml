@@ -110,10 +110,12 @@ let noteType2duree x note =
   | NoirePoint -> 1.5 *. (60.0 /. x)
 
 (* Return MIDI value of a Note *)
-let note2midi note = 
-  let numNom = nomNote2num note.nom in
-  let numNomPlusAlter = if note.alteration = Diese then numNom + 1 else numNom in (* +1 si Diese *)
-  (24 + 12*(note.octave)) + numNomPlusAlter
+let note2midi note =
+  match note.nom with
+  | Rest -> 0
+  | _ -> let numNom = nomNote2num note.nom in
+    let numNomPlusAlter = if note.alteration = Diese then numNom + 1 else numNom in (* +1 si Diese *)
+    (24 + 12*(note.octave)) + numNomPlusAlter
 
 (* Return the Note of a MIDI value *)
 let midi2note midi = 
